@@ -171,7 +171,7 @@ function smartFormatPost(text, entities) {
             trimmed.startsWith('•')
         ) {
             let cleanLine = trimmed.replace(/<[^>]*>/g, '');
-            formattedLines.push(`<blockquote>${cleanLine}</blockquote>`);
+            formattedLines.push(`<blockquote><b>${cleanLine}</b></blockquote>`);
         } 
         else if (lower.includes('code') && !lower.startsWith('http') && !lower.includes('app link') && !lower.includes('join') && !lower.includes('pin') && !lower.includes('channel')) {
             let parts = trimmed.split(/➔|->|➜|:/);
@@ -419,4 +419,4 @@ cron.schedule('0 10 * * 0', () => {
     }
 });
 
-console.log("Bot running with fixed blockquote formatting!");
+console.log("Bot running with bold blockquote text formatting!");
