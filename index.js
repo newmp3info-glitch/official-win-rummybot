@@ -156,7 +156,7 @@ function smartFormatPost(text, entities) {
             return;
         }
 
-        if (lower.includes('code') && !lower.startsWith('http') && !lower.includes('app link') && !lower.includes('join this channel') && !lower.includes('never miss')) {
+        if (lower.includes('code') && !lower.startsWith('http') && !lower.includes('app link') && !lower.includes('Join & Pin this channel') && !lower.includes('never miss')) {
             let parts = trimmed.split(/➔|->|➜|:/);
             if (parts.length > 1) {
                 let label = parts[0].trim();
@@ -190,7 +190,7 @@ function smartFormatPost(text, entities) {
             lower.includes('join this channel') || 
             lower.includes('pin this channel') ||
             lower.includes('never miss') ||
-            lower.includes('important promo code') ||
+            lower.includes('for daily promo codes!') ||
             trimmed.startsWith('🔥') ||
             trimmed.startsWith('🎁')
         ) {
