@@ -424,12 +424,11 @@ bot.on('message', async (msg) => {
                 await sendSingleMessage(chatId, foundPost.text, foundPost.photo, foundPost.replyMarkup);
             } else {
                 const notFoundMessage = `❌ <b>GAME NOT FOUND OR INVALID NAME!</b> ❌\n\n` +
-                    `⚡ Oops! The name you searched for is either incorrect or not available in our database.\n\n` +
-                    `⚠️ <b>PLEASE REMEMBER:</b> This bot is <b>ONLY FOR YONO GAMES & YONO PROMO CODES!</b> No other games or unrelated content will ever be provided here.\n\n` +
-                    `💡 <b>HOW TO GET REAL CODES RIGHT NOW:</b>\n` +
-                    `• 🎮 Please type and search the correct, real name of any Yono Game.\n` +
+                    `⚡ Oops! The name you searched for (<b>"${text}"</b>) is either incorrect or currently not available in our database.\n\n` +
+                    `⚠️ <b>PLEASE REMEMBER:</b> If <b>"${text}"</b> is a real Yono Game name, please double-check your spelling, or wait <b>5 minutes</b> and try searching again as codes update frequently!\n\n` +
+                    `💡 <b>HOW TO GET CODES RIGHT NOW:</b>\n` +
+                    `• 🎮 This bot is <b>ONLY FOR YONO GAMES & YONO PROMO CODES!</b>\n` +
                     `• 💰 Correct Yono game names will instantly give you active, fresh VIP promo codes!\n` +
-                    `• 📋 Check your spelling and search again.\n` +
                     `• 🔔 Keep notifications <b>ON</b> for instant fast-drop alerts.\n\n` +
                     `👑 <i>This is your #1 Official Hub for <b>ALL YONO GAMES & ALL VIP CODES!</b> 🚀</i>`;
 
@@ -464,4 +463,4 @@ cron.schedule('0 10 * * 0', () => {
     }
 });
 
-console.log("Bot running with updated invalid search message and all previous features intact!");
+console.log("Bot running with dynamic search query included in the invalid/waiting message!");
