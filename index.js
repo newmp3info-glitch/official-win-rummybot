@@ -194,9 +194,9 @@ function smartFormatPost(text, entities, timestamp) {
             let cleanLine = trimmed.replace(/<[^>]*>/g, '');
             formattedLines.push(`<blockquote><b>${cleanLine}</b></blockquote>`);
             
-            // Join & Pin লাইনের ঠিক নিচে টাইম সেট করার লজিক
+            // Join & Pin লাইনের ঠিক নিচে সম্পূর্ণ টাইম লেখা বোল্ড আকারে সেট করার লজিক
             if (lower.includes('join & pin') && !timestampAdded) {
-                formattedLines.push(`🕒 <b>Date & Time:</b> <code>${timeStr}</code>`);
+                formattedLines.push(`🕒 <b>Date & Time: ${timeStr}</b>`);
                 timestampAdded = true;
             }
         } 
@@ -244,9 +244,8 @@ function smartFormatPost(text, entities, timestamp) {
         }
     });
 
-    // কোনো কারণে join & pin না থাকলে যেন টাইম মিস না হয়, নিচে যুক্ত হবে
     if (!timestampAdded) {
-        formattedLines.push(`🕒 <b>Date & Time:</b> <code>${timeStr}</code>`);
+        formattedLines.push(`🕒 <b>Date & Time: ${timeStr}</b>`);
         timestampAdded = true;
     }
 
@@ -465,4 +464,4 @@ cron.schedule('0 10 * * 0', () => {
     }
 });
 
-console.log("Bot running with timestamp placed below Join & Pin and ultimate anti-link protection!");
+console.log("Bot running with bold timestamp below Join & Pin and ultimate anti-link protection!");
