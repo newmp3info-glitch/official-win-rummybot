@@ -145,6 +145,8 @@ function smartFormatPost(text, entities, timestamp) {
     let formattedLines = [];
     let hashtags = [];
     let nonEmtpyCount = 0;
+    let timestampAdded = false;
+    let timeStr = formatPostTimestamp(timestamp);
 
     lines.forEach(line => {
         let trimmed = line.trim();
@@ -166,10 +168,6 @@ function smartFormatPost(text, entities, timestamp) {
         if (nonEmtpyCount === 1) {
             let cleanLine = trimmed.replace(/<[^>]*>/g, '');
             formattedLines.push(`<b>${cleanLine}</b>`);
-            
-            // পোস্টের প্রথম লাইনের ঠিক নিচে ডেট ও টাইম যুক্ত করা হলো
-            let timeStr = formatPostTimestamp(timestamp);
-            formattedLines.push(`🕒 <b>Date & Time:</b> <code>${timeStr}</code>`);
             return;
         }
 
@@ -195,6 +193,12 @@ function smartFormatPost(text, entities, timestamp) {
         else if (isQuoteLine) {
             let cleanLine = trimmed.replace(/<[^>]*>/g, '');
             formattedLines.push(`<blockquote><b>${cleanLine}</b></blockquote>`);
+            
+            // Join & Pin লাইনের ঠিক নিচে টাইম সেট করার লজিক
+            if (lower.includes('join & pin') && !timestampAdded) {
+                formattedLines.push(`🕒 <b>Date & Time:</b> <code>${timeStr}</code>`);
+                timestampAdded = true;
+            }
         } 
         else if (isDownloadLine) {
             if (downloadUrl) {
@@ -214,7 +218,6 @@ function smartFormatPost(text, entities, timestamp) {
             formattedLines.push(`<b>${cleanLine}</b>`);
         } 
         else {
-            // ডোমেন, ইউআরএল বা প্রমো কোড লাইনগুলোকে নিখোঁতভাবে কোড ট্যাগে রূপান্তর করার লজিক
             if (trimmed.includes('➔') || trimmed.includes('->') || trimmed.includes('➜')) {
                 let parts = trimmed.split(/➔|->|➜/);
                 if (parts.length === 2) {
@@ -240,6 +243,12 @@ function smartFormatPost(text, entities, timestamp) {
             formattedLines.push(formattedLine);
         }
     });
+
+    // কোনো কারণে join & pin না থাকলে যেন টাইম মিস না হয়, নিচে যুক্ত হবে
+    if (!timestampAdded) {
+        formattedLines.push(`🕒 <b>Date & Time:</b> <code>${timeStr}</code>`);
+        timestampAdded = true;
+    }
 
     if (hashtags.length > 0) {
         formattedLines.push(`<blockquote><tg-spoiler>${hashtags.join(' ')}</tg-spoiler></blockquote>`);
@@ -456,4 +465,4 @@ cron.schedule('0 10 * * 0', () => {
     }
 });
 
-console.log("Bot running with automatic timestamp and anti-link protection!");
+console.log("Bot running with timestamp placed below Join & Pin and ultimate anti-link protection!");
